@@ -5,6 +5,7 @@ import com.example.cerita.data.pref.UserModel
 import com.example.cerita.data.pref.UserPreference
 import com.example.cerita.data.response.LoginResponse
 import com.example.cerita.data.response.RegisterResponse
+import com.example.cerita.data.response.StoryDetailResponse
 import com.example.cerita.data.response.StoryResponse
 import com.example.cerita.di.Result
 import kotlinx.coroutines.Dispatchers
@@ -51,7 +52,13 @@ class UserRepository(
         e.printStackTrace()
         (Result.Error(e.message ?: "An error occurred"))
     }
-
+    suspend fun detailStories(id: String): Flow<Result<StoryDetailResponse>> = flow {
+        val response = apiService.detailStories(id)
+        emit(Result.Success(response))
+    }.catch { e ->
+        e.printStackTrace()
+        (Result.Error(e.message ?: "An error occurred"))
+    }
 
     fun getSession(): Flow<UserModel> {
         return userPreference.getSession()

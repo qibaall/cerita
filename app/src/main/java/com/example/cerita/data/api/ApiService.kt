@@ -3,6 +3,7 @@ package com.example.cerita.data.api
 
 import com.example.cerita.data.response.LoginResponse
 import com.example.cerita.data.response.RegisterResponse
+import com.example.cerita.data.response.StoryDetailResponse
 import com.example.cerita.data.response.StoryResponse
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -33,4 +34,9 @@ interface ApiService {
 
     @GET("stories")
     suspend fun getStories(): StoryResponse
+
+    @GET("stories/{id}")
+    suspend fun detailStories(
+        @Path("id") id: String
+    ): StoryDetailResponse
 }
