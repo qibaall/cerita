@@ -9,15 +9,17 @@ import com.example.cerita.data.response.StoryDetailResponse
 import com.example.cerita.data.response.StoryResponse
 import com.example.cerita.data.response.UploadResponse
 import com.example.cerita.di.Result
+import com.google.gson.Gson
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
-import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
+import retrofit2.HttpException
 import java.io.File
 
 class UserRepository(
@@ -68,18 +70,24 @@ class UserRepository(
     }
 
 
-    suspend fun uploadStories(image: File, description: String): Flow<Result<UploadResponse>> =
-        flow {
-            val requestFile = image.asRequestBody("image/*".toMediaTypeOrNull())
-            val body = MultipartBody.Part.createFormData("file", image.name, requestFile)
-            val descriptionBody = description.toRequestBody("text/plain".toMediaTypeOrNull())
-
-            val response = apiService.uploadStories(body, descriptionBody)
-            emit(Result.Success(response))
-        }.flowOn(Dispatchers.IO).catch { e ->
-            e.printStackTrace()
-            (Result.Error(e.message ?: "An error occurred"))
+    fun uploadStories(imageFile: File, description: String): Flow<Result<UploadResponse>> = flow {
+        emit(Result.Loading)
+        val requestBody = description.toRequestBody("text/plain".toMediaType())
+        val requestImg = imageFile.asRequestBody("image/jpg".toMediaType())
+        val bodyMultipart = MultipartBody.Part.createFormData(
+            "photo",
+            imageFile.name,
+            requestImg
+        )
+        try {
+            val responseSuccess = apiService.uploadStories(bodyMultipart, requestBody)
+            emit(Result.Success(responseSuccess))
+        } catch (e: HttpException) {
+            val errorBody = e.response()?.errorBody()?.string()
+            val responseError = Gson().fromJson(errorBody, UploadResponse::class.java)
+            emit(Result.Error(responseError.message))
         }
+    }
 
     fun getSession(): Flow<UserModel> {
         return userPreference.getSession()

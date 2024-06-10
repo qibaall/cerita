@@ -20,5 +20,6 @@
     <string name="upload">Upload</string>
     <string name="description">Masukkan Deskripsi Cerita Anda.....</string>
     <string name="logout">Logout</string>
+    <string name="NoImg">Gambar Tidak Tersedia</string>
 
 </resources>
