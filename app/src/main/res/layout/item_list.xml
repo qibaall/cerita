@@ -45,13 +45,12 @@
             android:id="@+id/tv_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/time_stamp"
             android:layout_marginStart="16dp"
             android:layout_marginBottom="8dp"
+            android:text="@string/time_stamp"
             android:textSize="13sp"
-            card_view:layout_constraintStart_toEndOf="@id/tv_item_name"
-            card_view:layout_constraintBottom_toBottomOf="parent" />
-
+            card_view:layout_constraintBottom_toBottomOf="parent"
+            card_view:layout_constraintStart_toEndOf="@id/tv_item_name" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

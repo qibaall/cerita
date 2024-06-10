@@ -48,10 +48,12 @@ class RegisterActivity : AppCompatActivity() {
                 startActivity(intent)
                 finish()
             }
+
             is Result.Error -> {
                 binding.progressBar.visibility = View.GONE
                 Toast.makeText(this, "Register Failed: ${result.error}", Toast.LENGTH_SHORT).show()
             }
+
             is Result.Loading -> {
                 binding.progressBar.visibility = View.VISIBLE
                 Toast.makeText(this, "Registering...", Toast.LENGTH_SHORT).show()

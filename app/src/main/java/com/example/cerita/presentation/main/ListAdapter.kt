@@ -10,9 +10,14 @@ import com.example.cerita.data.response.ListStoryItem
 import com.example.cerita.databinding.ItemListBinding
 import com.example.cerita.presentation.detail.StoryDetailActivity
 
-class ListAdapter(private var stories: List<ListStoryItem>) : RecyclerView.Adapter<ListAdapter.StoryViewHolder>() {
 
-    inner class StoryViewHolder(private val binding: ItemListBinding) : RecyclerView.ViewHolder(binding.root) {
+class ListAdapter(
+    private var stories: List<ListStoryItem>
+) :
+    RecyclerView.Adapter<ListAdapter.StoryViewHolder>() {
+
+    inner class StoryViewHolder(private val binding: ItemListBinding) :
+        RecyclerView.ViewHolder(binding.root) {
         fun bind(story: ListStoryItem) {
             with(binding) {
                 tvItemName.text = story.name
@@ -22,6 +27,7 @@ class ListAdapter(private var stories: List<ListStoryItem>) : RecyclerView.Adapt
                     .into(imgPhoto)
 
                 itemView.setOnClickListener {
+
                     val intent = Intent(itemView.context, StoryDetailActivity::class.java)
                     intent.putExtra("storyName", story.name)
                     intent.putExtra("storyTime", story.createdAt)

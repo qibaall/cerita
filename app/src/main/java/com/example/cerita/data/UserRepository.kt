@@ -7,12 +7,18 @@ import com.example.cerita.data.response.LoginResponse
 import com.example.cerita.data.response.RegisterResponse
 import com.example.cerita.data.response.StoryDetailResponse
 import com.example.cerita.data.response.StoryResponse
+import com.example.cerita.data.response.UploadResponse
 import com.example.cerita.di.Result
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody.Companion.asRequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
+import java.io.File
 
 class UserRepository(
     private val userPreference: UserPreference,
@@ -52,6 +58,7 @@ class UserRepository(
         e.printStackTrace()
         (Result.Error(e.message ?: "An error occurred"))
     }
+
     suspend fun detailStories(id: String): Flow<Result<StoryDetailResponse>> = flow {
         val response = apiService.detailStories(id)
         emit(Result.Success(response))
@@ -59,6 +66,20 @@ class UserRepository(
         e.printStackTrace()
         (Result.Error(e.message ?: "An error occurred"))
     }
+
+
+    suspend fun uploadStories(image: File, description: String): Flow<Result<UploadResponse>> =
+        flow {
+            val requestFile = image.asRequestBody("image/*".toMediaTypeOrNull())
+            val body = MultipartBody.Part.createFormData("file", image.name, requestFile)
+            val descriptionBody = description.toRequestBody("text/plain".toMediaTypeOrNull())
+
+            val response = apiService.uploadStories(body, descriptionBody)
+            emit(Result.Success(response))
+        }.flowOn(Dispatchers.IO).catch { e ->
+            e.printStackTrace()
+            (Result.Error(e.message ?: "An error occurred"))
+        }
 
     fun getSession(): Flow<UserModel> {
         return userPreference.getSession()

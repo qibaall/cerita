@@ -14,6 +14,7 @@ class LoginViewModel(private val repository: UserRepository) : ViewModel() {
     fun userLogin(email: String, password: String): Flow<Result<LoginResponse>> {
         return repository.login(email, password)
     }
+
     fun saveSession(user: UserModel) {
         viewModelScope.launch {
             repository.saveSession(user)

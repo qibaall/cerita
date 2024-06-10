@@ -15,5 +15,10 @@
     <string name="add">add</string>
     <string name="welcome_to_my_app">Welcome to My App</string>
     <string name="imageview" />
+    <string name="camera">Camera</string>
+    <string name="gallery">Gallery</string>
+    <string name="upload">Upload</string>
+    <string name="description">Masukkan Deskripsi Cerita Anda.....</string>
+    <string name="logout">Logout</string>
 
 </resources>

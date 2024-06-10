@@ -34,7 +34,7 @@ class LoginActivity : AppCompatActivity() {
             val email = binding.edLoginEmail.text.toString()
             val password = binding.edLoginPassword.text.toString()
             lifecycleScope.launch {
-                loginViewModel.userLogin(email, password).collect{ result ->
+                loginViewModel.userLogin(email, password).collect { result ->
                     handleLoginResult(result, email)
                 }
             }
@@ -55,10 +55,12 @@ class LoginActivity : AppCompatActivity() {
                 startActivity(intent)
                 finish()
             }
+
             is Result.Error -> {
                 binding.progressBar.visibility = View.GONE
                 Toast.makeText(this, "Login Failed: ${result.error}", Toast.LENGTH_SHORT).show()
             }
+
             is Result.Loading -> {
                 binding.progressBar.visibility = View.VISIBLE
             }
