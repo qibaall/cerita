@@ -1,9 +1,10 @@
 <resources>
     <!-- Base application theme. -->
     <style name="Base.Theme.Cerita" parent="Theme.Material3.DayNight">
-        <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="colorPrimary">@color/defaultcolor</item>
+        <item name="colorOnPrimary">@color/white</item>
     </style>
 
-    <style name="Theme.Cerita" parent="Base.Theme.Cerita" />
+    <style name="Theme.Cerita" parent="Base.Theme.Cerita"
+        />
 </resources>

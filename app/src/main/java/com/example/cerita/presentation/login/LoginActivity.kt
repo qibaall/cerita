@@ -2,11 +2,13 @@ package com.example.cerita.presentation.login
 
 import android.content.Intent
 import android.os.Bundle
+import android.transition.TransitionInflater
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import com.example.cerita.R
 import com.example.cerita.data.api.ApiConfig
 import com.example.cerita.data.pref.UserModel
 import com.example.cerita.data.response.LoginResponse
@@ -26,6 +28,10 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        val fade = TransitionInflater.from(this).inflateTransition(R.transition.fade)
+        window.enterTransition = fade
+        window.exitTransition = fade
 
         val viewModelFactory = ViewModelFactory.getInstance(this)
         loginViewModel = ViewModelProvider(this, viewModelFactory)[LoginViewModel::class.java]

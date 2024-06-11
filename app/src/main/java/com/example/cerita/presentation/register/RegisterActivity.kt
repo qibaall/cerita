@@ -2,11 +2,13 @@ package com.example.cerita.presentation.register
 
 import android.content.Intent
 import android.os.Bundle
+import android.transition.TransitionInflater
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import com.example.cerita.R
 import com.example.cerita.data.response.RegisterResponse
 import com.example.cerita.databinding.ActivityRegisterBinding
 import com.example.cerita.di.Result
@@ -23,6 +25,10 @@ class RegisterActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityRegisterBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        val fade = TransitionInflater.from(this).inflateTransition(R.transition.fade)
+        window.enterTransition = fade
+        window.exitTransition = fade
 
         val viewModelFactory = ViewModelFactory.getInstance(this)
         registerViewModel = ViewModelProvider(this, viewModelFactory)[RegisterViewModel::class.java]

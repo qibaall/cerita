@@ -6,6 +6,8 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
+import android.view.View
+import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
@@ -23,6 +25,8 @@ import java.io.FileOutputStream
 class UploadActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityUploadBinding
+    private lateinit var progressBar: ProgressBar
+
     private var imageUri: Uri? = null
     private val viewModel: UploadViewModel by lazy {
         ViewModelProvider(this, ViewModelFactory.getInstance(this))[UploadViewModel::class.java]
@@ -37,13 +41,17 @@ class UploadActivity : AppCompatActivity() {
         }
     }
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityUploadBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        progressBar = findViewById(R.id.progressBar)
 
         binding.galleryButton.setOnClickListener { gallery() }
         binding.uploadButton.setOnClickListener { uploadImg() }
+        binding.cameraButton.setOnClickListener{}
+            Toast.makeText(this, "Fitur Belum Tersedia :(", Toast.LENGTH_SHORT).show()
     }
 
     private fun gallery() {
@@ -102,12 +110,16 @@ class UploadActivity : AppCompatActivity() {
     }
 
     private fun File.reduceFileImage(): File {
-        // Implement image compression logic here if needed
         return this
     }
 
     private fun loading(isLoading: Boolean) {
-        // Implement loading indicator logic here if needed
+        if (isLoading) {
+            progressBar.visibility = View.VISIBLE
+        } else {
+            progressBar.visibility = View.GONE
+
+        }
     }
 
     private fun toast(message: String) {

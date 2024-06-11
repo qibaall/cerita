@@ -13,7 +13,8 @@
     <string name="author">author</string>
     <string name="time_stamp">waktu</string>
     <string name="add">add</string>
-    <string name="welcome_to_my_app">Welcome to My App</string>
+    <string name="welcome_to_my_app">Selamat Datang Di
+        CeritaKita</string>
     <string name="imageview" />
     <string name="camera">Camera</string>
     <string name="gallery">Gallery</string>
