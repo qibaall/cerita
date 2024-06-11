@@ -46,12 +46,9 @@ class UploadActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityUploadBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        progressBar = findViewById(R.id.progressBar)
 
         binding.galleryButton.setOnClickListener { gallery() }
         binding.uploadButton.setOnClickListener { uploadImg() }
-        binding.cameraButton.setOnClickListener{}
-            Toast.makeText(this, "Fitur Belum Tersedia :(", Toast.LENGTH_SHORT).show()
     }
 
     private fun gallery() {

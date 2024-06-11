@@ -5,9 +5,9 @@
     <color name="lightblue">#6295A2</color>
 
 
-<!--    Button Background  -->
+    <!--    Button Background  -->
     <color name="defaultcolor">#6295A2</color>
-        <color name="pressedColor">#FFFFFF</color> <!-- Warna latar belakang ketika ditekan -->
-        <color name="disabledColor">#808080</color> <!-- Warna latar belakang ketika dinonaktifkan -->
+    <color name="pressedColor">#FFFFFF</color> <!-- Warna latar belakang ketika ditekan -->
+    <color name="disabledColor">#808080</color> <!-- Warna latar belakang ketika dinonaktifkan -->
 
 </resources>

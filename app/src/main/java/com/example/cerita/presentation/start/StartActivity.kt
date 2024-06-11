@@ -17,7 +17,7 @@ class StartActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityStartBinding
     private lateinit var startViewModel: StartViewModel
-    private lateinit var motionLayout : MotionLayout
+    private lateinit var motionLayout: MotionLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,6 +44,7 @@ class StartActivity : AppCompatActivity() {
         }
 
     }
+
     private fun navigateToMainActivity() {
         val intent = Intent(this, MainActivity::class.java)
         startActivity(intent)
@@ -52,7 +53,7 @@ class StartActivity : AppCompatActivity() {
 
     private fun navigateToLogin() {
         val intent = Intent(this, LoginActivity::class.java)
-        val option =  ActivityOptionsCompat.makeSceneTransitionAnimation(
+        val option = ActivityOptionsCompat.makeSceneTransitionAnimation(
             this,
             binding.btnLogin,
             "button_transition"
@@ -62,7 +63,7 @@ class StartActivity : AppCompatActivity() {
 
     private fun navigateToRegister() {
         val intent = Intent(this, RegisterActivity::class.java)
-        val option =  ActivityOptionsCompat.makeSceneTransitionAnimation(
+        val option = ActivityOptionsCompat.makeSceneTransitionAnimation(
             this,
             binding.btnRegister,
             "button_transition"

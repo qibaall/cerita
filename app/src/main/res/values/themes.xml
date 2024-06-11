@@ -5,6 +5,5 @@
         <item name="colorOnPrimary">@color/white</item>
     </style>
 
-    <style name="Theme.Cerita" parent="Base.Theme.Cerita"
-        />
+    <style name="Theme.Cerita" parent="Base.Theme.Cerita" />
 </resources>
