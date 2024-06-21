@@ -9,6 +9,7 @@ import com.example.cerita.data.UserRepository
 import com.example.cerita.di.Injection
 import com.example.cerita.presentation.login.LoginViewModel
 import com.example.cerita.presentation.main.MainViewModel
+import com.example.cerita.presentation.maps.MapsViewModel
 import com.example.cerita.presentation.register.RegisterViewModel
 import com.example.cerita.presentation.start.StartViewModel
 import com.example.cerita.presentation.upload.UploadViewModel
@@ -35,6 +36,9 @@ class ViewModelFactory(private val userRepository: UserRepository) : ViewModelPr
 
             modelClass.isAssignableFrom(StartViewModel::class.java) -> {
                 StartViewModel(userRepository) as T
+            }
+            modelClass.isAssignableFrom(MapsViewModel::class.java) -> {
+                MapsViewModel(userRepository) as T
             }
 
             else -> throw IllegalArgumentException("Unknown ViewModel class" + modelClass.name)

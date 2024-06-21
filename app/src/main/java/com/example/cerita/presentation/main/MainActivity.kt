@@ -11,6 +11,7 @@ import com.example.cerita.R
 import com.example.cerita.databinding.ActivityMainBinding
 import com.example.cerita.di.Injection
 import com.example.cerita.presentation.ViewModelFactory
+import com.example.cerita.presentation.maps.MapsActivity
 import com.example.cerita.presentation.start.StartActivity
 import com.example.cerita.presentation.upload.UploadActivity
 
@@ -33,8 +34,6 @@ class MainActivity : AppCompatActivity() {
         setupRecyclerView()
         observeViewModel()
 
-        mainViewModel.getList()
-
         setupUploadButton()
     }
 
@@ -51,23 +50,27 @@ class MainActivity : AppCompatActivity() {
                 startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK))
                 true
             }
-
+            R.id.maps -> {
+                val intent = Intent(this, MapsActivity::class.java)
+                startActivity(intent)
+                true
+            }
             else -> super.onOptionsItemSelected(item)
         }
     }
 
     private fun setupRecyclerView() {
-        listAdapter = ListAdapter(emptyList())
+        listAdapter = ListAdapter()
         binding.rvStory.layoutManager = LinearLayoutManager(this)
-        binding.rvStory.adapter = listAdapter
+        binding.rvStory.adapter = listAdapter.withLoadStateFooter(
+            footer = LoadingStateAdapter { listAdapter.retry() }
+        )
     }
 
     private fun observeViewModel() {
-        mainViewModel.listStory.observe(this) { stories ->
-            listAdapter.updateStories(stories)
+        mainViewModel.story.observe(this) { pagingData ->
+            listAdapter.submitData(lifecycle, pagingData)
         }
-
-
     }
 
     private fun setupUploadButton() {

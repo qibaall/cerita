@@ -1,8 +1,16 @@
 package com.example.cerita.data
 
+import android.util.Log
+import androidx.lifecycle.LiveData
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
+import androidx.paging.liveData
 import com.example.cerita.data.api.ApiService
+import com.example.cerita.data.api.StoryPagingSource
 import com.example.cerita.data.pref.UserModel
 import com.example.cerita.data.pref.UserPreference
+import com.example.cerita.data.response.ListStoryItem
 import com.example.cerita.data.response.LoginResponse
 import com.example.cerita.data.response.RegisterResponse
 import com.example.cerita.data.response.StoryDetailResponse
@@ -53,14 +61,27 @@ class UserRepository(
             }
         }.flowOn(Dispatchers.IO)
 
-    suspend fun getStories(): Flow<Result<StoryResponse>> = flow {
-        val response = apiService.getStories()
-        emit(Result.Success(response))
-    }.catch { e ->
-        e.printStackTrace()
-        (Result.Error(e.message ?: "An error occurred"))
+    fun getStories(): LiveData<PagingData<ListStoryItem>> {
+        return Pager(
+            config = PagingConfig(
+                pageSize = 3
+            ),
+            pagingSourceFactory = {
+                StoryPagingSource(apiService)
+            }
+        ).liveData
     }
 
+    suspend fun getStoriesWithLocation(): StoryResponse {
+        val client = apiService.getStoriesWithLocation()
+        if (client.listStory.isNotEmpty()) {
+            Log.d("AppRepository", "onSuccess")
+            return client
+        } else {
+            Log.d("AppRepository", "onFailure : ${client.message}")
+        }
+        return client
+    }
     suspend fun detailStories(id: String): Flow<Result<StoryDetailResponse>> = flow {
         val response = apiService.detailStories(id)
         emit(Result.Success(response))

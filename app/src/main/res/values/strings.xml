@@ -23,5 +23,7 @@
     <string name="logout">Logout</string>
     <string name="NoImg">Masukkan Gambar Terlebih Dahulu</string>
     <string name="story">cerita</string>
+    <string name="retry">Retry</string>
+    <string name="location">location</string>
 
 </resources>

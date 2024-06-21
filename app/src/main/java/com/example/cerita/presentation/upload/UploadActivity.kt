@@ -7,7 +7,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.ProgressBar
+
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
@@ -25,7 +25,7 @@ import java.io.FileOutputStream
 class UploadActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityUploadBinding
-    private lateinit var progressBar: ProgressBar
+
 
     private var imageUri: Uri? = null
     private val viewModel: UploadViewModel by lazy {
@@ -67,12 +67,11 @@ class UploadActivity : AppCompatActivity() {
                 viewModel.uploadStories(fileImage, description).collect { result ->
                     when (result) {
                         is Result.Loading -> {
-                            loading(true)
+                            binding.progressIndicator.visibility = View.VISIBLE
                         }
 
                         is Result.Success -> {
                             toast(result.data.message)
-                            loading(false)
 
                             val intent = Intent(this@UploadActivity, MainActivity::class.java)
                             intent.flags =
@@ -83,7 +82,6 @@ class UploadActivity : AppCompatActivity() {
 
                         is Result.Error -> {
                             toast(result.error)
-                            loading(false)
                         }
                     }
                 }
@@ -110,14 +108,7 @@ class UploadActivity : AppCompatActivity() {
         return this
     }
 
-    private fun loading(isLoading: Boolean) {
-        if (isLoading) {
-            progressBar.visibility = View.VISIBLE
-        } else {
-            progressBar.visibility = View.GONE
 
-        }
-    }
 
     private fun toast(message: String) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
